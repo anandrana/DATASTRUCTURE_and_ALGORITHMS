@@ -1,3 +1,8 @@
+/* This is code of Floyd_Warshal Algorithm . It is used for finding the all pairs  shortest path in the graph. It is used for 
+negative edge also but in dijsktra's do not work for negative weighted edge but in Floyd_Warshall algorithm do not work for 
+negative cycle (sum of the weight values is negative means less then 0 is called negative cycle)*/
+
+
 #include <bits/stdc++.h>
 #define ll long long
 using namespace std;
@@ -15,7 +20,7 @@ int main() {
                 if(s=="INF"){
                     a[i][j]=INT_MAX;
                 } else {
-                    k=stoi(s);
+                    k=stoi(s); //stoi function is used for converting string into int.
                     a[i][j]=k;
                 }
             }
