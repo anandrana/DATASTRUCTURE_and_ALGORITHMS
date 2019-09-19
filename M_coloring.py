@@ -1,3 +1,10 @@
+"""
+This is the program of m_coloring of the graph it means we have given m color to coloring the graph which have no two adjacent 
+vetices have same color .......in this solution i used Backtracking concept 
+
+"""
+
+
 def issafe(graph,color,u,c):
     for i in range(len(graph[0])):
             if(graph[u][i] and c==color[i]):
