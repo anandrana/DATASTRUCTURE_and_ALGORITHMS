@@ -1,3 +1,8 @@
+"""
+This is hamiltonian path , this is find the path that is each vertices travels only once if the path is exits the we say that 
+hamiltonian cycle is present otherwise not present , it is backtracking concept
+"""
+
 from collections import defaultdict
 
 
@@ -31,7 +36,7 @@ for _ in range(int(input())):
         
         g[edges[i+1]].add(edges[i])
     
-    print(g)    
+    #print(g)    
     v = [True]+[False]*n
     #print(v)
     
