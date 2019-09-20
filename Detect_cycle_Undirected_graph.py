@@ -1,4 +1,9 @@
+"""
+In this concept we detect the cycle present in the graph if present then print graph have cycle otherwise donot have any cycle
+in the graph
 
+
+"""
 from collections import defaultdict
 class Graph:
     def __init__(self,vertex):
