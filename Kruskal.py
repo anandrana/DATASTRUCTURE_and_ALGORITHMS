@@ -1,3 +1,9 @@
+"""
+this algorithm is used for MST(minimal spanning tree) 
+In this algorithm we have to select those edge which have smaller weight. we have take V-1 number of edge .
+
+"""
+
 class Graph:
     def __init__(self,vertex):
         self.V=vertex
