@@ -1,3 +1,7 @@
+"""
+this is also used for finding the Mst(minimum spanning tree).
+"""
+
 import sys
 
 class Graph:
