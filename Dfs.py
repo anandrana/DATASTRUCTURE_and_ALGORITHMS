@@ -18,19 +18,21 @@ class Graph:
                 vis[i]=True
                 self.UtilDfs(i,vis)
     
-    def Dfs(self):
+    def Dfs(self,x):
+        
         
         v=len(self.graph)
-        visited=[False]*v 
+
+        visited=[False]*(V+1) 
+        self.UtilDfs(x,visited)
         
-        for i in range(v):
-            if(visited[i]==False):
-                self.UtilDfs(i,visited)
-                
-e,v=map(int,input().split())
+               
+e,V=map(int,input().split())
 
 g=Graph()
 for i in range(e):
     v1,v2=map(int,input().split())
+    if(i==0):
+        x=v1 
     g.edgeList(v1,v2)
-g.Dfs()
+g.Dfs(x)
