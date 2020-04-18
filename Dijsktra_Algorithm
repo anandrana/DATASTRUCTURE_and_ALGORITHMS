@@ -1,0 +1,57 @@
+from collections import defaultdict
+import heapq
+
+class Solution:
+    # @param A : integer
+    # @param B : list of list of integers
+    # @param C : integer
+    # @return a list of integer
+    def __init__(self):
+        self.graph=defaultdict(list)
+
+        self.distances={}
+    def add_edge(self,from_node,to_node,weight):
+        self.graph[from_node].append(to_node)
+        self.graph[to_node].append(from_node)
+        
+        self.distances[from_node,to_node]=weight
+        self.distances[to_node,from_node]=weight
+        
+    def dijsktra(self,initial,A):
+        visited={initial:0}
+        heap=[(0,initial)]
+        
+        node=set(range(A))
+        while node and heap:
+            current_weight,min_node=heapq.heappop(heap)
+            
+            try:
+                while min_node not in node:
+                    current_weight,min_node=heapq.heappop(heap)
+            except IndexError:
+                break
+            
+            node.remove(min_node)
+            
+            for v in self.graph[min_node]:
+                weight=current_weight+self.distances[min_node,v]
+                
+                if v not in visited or weight<visited[v]:
+                    visited[v]=weight
+                    
+                    heapq.heappush(heap,(weight,v))
+                    
+        return visited
+        
+    def solve(self,A,B,C):
+        for i in range(len(B)):
+            self.add_edge(B[i][0],B[i][1],B[i][2])
+        dic=self.dijsktra(C,A)
+        res=[]
+        for i in range(A):
+            if i in dic:
+                res.append(dic[i])
+            else:
+                res.append(-1)
+        return(res)
+        
