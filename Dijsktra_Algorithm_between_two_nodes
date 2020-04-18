@@ -1,0 +1,41 @@
+import heapq
+from collections import defaultdict
+class Solution:
+    # @param A : integer
+    # @param B : list of list of integers
+    # @param C : integer
+    # @param D : integer
+    # @return an integer
+    def solve(self, A, B, C, D):
+        def dijsktra(A,B,C,D):
+            graph=defaultdict(list)
+            
+            for from_node,to_node,weight in B:
+                graph[from_node].append((to_node,weight))
+                graph[to_node].append((from_node,weight))
+            
+            heap,visited,dic=[(0,C,[])],set(),{C:0}
+            
+            while heap:
+                cost,v1,path=heapq.heappop(heap)
+                if v1 not in visited:
+                    visited.add(v1)
+                    path=path+[v1]
+                    
+                    if(v1==D):
+                        return (cost,path)
+                    for v2,c in graph.get(v1,()):
+                        if v2 in visited:
+                            continue
+                        x=dic.get(v2,None)
+                        weight=cost+c
+                        
+                        if x is None or weight<x:
+                            dic[v2]=weight
+                            heapq.heappush(heap,(weight,v2,path))
+            return (-1,[])
+                            
+                        
+                        
+        res=dijsktra(A,B,C,D)
+        return res[0]
