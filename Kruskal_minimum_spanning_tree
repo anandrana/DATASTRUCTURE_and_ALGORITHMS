@@ -1,0 +1,55 @@
+class Solution:
+	# @param A : integer
+	# @param B : list of list of integers
+	# @return an integer
+	def solve(self, A, B):
+	    graph=[]
+	    def addedge(i):
+	        graph.append(i)
+	    
+	    def find(parent,i):
+	        if(parent[i]==-1):
+	            return i
+	        return find(parent,parent[i])
+	    
+	    def union(parent,u,v,rank):
+	        xroot=find(parent,u)
+	        yroot=find(parent,v)
+	        
+	        if rank[xroot]>rank[yroot]:
+	            parent[yroot]=xroot
+	        elif rank[xroot]<rank[yroot]:
+	            parent[xroot]=yroot
+	        else:
+	            parent[yroot]=xroot
+	            rank[xroot]+=1
+	            
+	            
+	    for i in B:
+	        addedge(i)
+        
+        graph=sorted(graph,key=lambda x:x[2])
+        i=1
+        e=0
+        parent=[-1]*(A+1)
+        rank=[0]*(A+1)
+        result=[]
+        while(e<A-1):
+            x=graph[i-1]
+            i+=1
+            u=x[0]
+            v=x[1]
+            w=x[2]
+            
+            s1=find(parent,u)
+            s2=find(parent,v)
+            
+            if(s1!=s2):
+                e+=1
+                result.append(x)
+                union(parent,u,v,rank)
+        total=0
+        for i in result:
+            total+=i[2]
+        return total
+                
