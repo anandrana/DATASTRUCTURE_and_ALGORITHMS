@@ -1,0 +1,69 @@
+from collections import defaultdict
+import heapq 
+class Solution:
+    # @param A : integer
+    # @param B : list of list of integers
+    # @return an integer
+    def __init__(self):
+        self.graph=defaultdict(list)
+
+        
+    def addedge(self,u,v,w):
+        self.graph[u].append((v,w))
+        self.graph[v].append((u,w))
+
+    def remove_edge(self,u,v,w):
+        self.graph[u].remove((v,w))
+        self.graph[v].remove((u,w))
+        
+    def dijsktra(self,u,v):
+        heap,visited,dic=[(0,u,[])],set(),{u:0}
+        
+        while heap:
+            wt,ver,path=heapq.heappop(heap)
+            if ver not in visited:
+                visited.add(ver)
+                path=path+[ver]
+                
+                if(ver==v):
+                    return wt 
+                
+                for v2,cost in self.graph.get(ver,()):
+                    
+                    if v2 in visited:
+                        continue
+                    x=dic.get(v2,None)
+                    
+                    weight=wt+cost
+                    if x is None or weight<x:
+                        dic[v2]=weight
+                        heapq.heappush(heap,(weight,v2,path))
+        return -1
+                
+    def solve(self, A, B):
+        for i in B:
+            self.addedge(i[0],i[1],i[2])
+        E=len(B)
+        Min_weight=1e9
+        for i in range(1,E+1):
+            e=B[i-1]
+            
+            u=e[0]
+            v=e[1]
+            w=e[2]
+            self.remove_edge(u,v,w)
+            
+            shortest_path=self.dijsktra(u,v)
+            if(shortest_path==-1):
+                pass
+            else:
+                Min_weight=min(Min_weight,shortest_path+w)
+            
+            self.graph[u].append((v,w))
+            self.graph[v].append((u,w))
+            
+            
+        if(Min_weight==1e9):
+            return -1 
+        else:
+            return Min_weight
