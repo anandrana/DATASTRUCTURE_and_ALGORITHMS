@@ -1,0 +1,29 @@
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        #using the concept of bits masking
+        # if elements is encounter single times then it will update ones
+        # if elements is encounter twice then it will update twos and makes ones zero
+        # if elements is encounter thrice then it will update ones and twos are zeros
+        
+        ones=0;twos=0;not_threes=0
+        for n in nums:
+            twos |=(ones & n)
+            ones ^=(n)
+            not_threes=~(ones & twos)
+            ones=(ones & not_threes)
+            twos=(twos & not_threes)
+        return ones
+    
+# using the concept of hashing O(n) time complexity and O(n) space complexity        
+#         dic={}
+#         for i in range(len(nums)):
+#             if(nums[i] in dic):
+#                 dic[nums[i]]+=1
+#             else:
+#                 dic[nums[i]]=1
+        
+#         for k,v in dic.items():
+#             if(v==1):
+#                 return k
+        
+        
