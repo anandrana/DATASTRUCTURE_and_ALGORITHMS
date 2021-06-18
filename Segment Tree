@@ -1,0 +1,62 @@
+temp=[]
+class NumArray:   
+    def buildTree(self,nums,temp,v,tl,tr):
+            if(tl==tr):
+                temp[v]=nums[tl]
+
+            else:
+                tm=(tl+tr)//2
+                self.buildTree(nums,temp,2*v,tl,tm)
+                self.buildTree(nums,temp,2*v+1,tm+1,tr)
+                temp[v]=temp[2*v]+temp[2*v+1]
+            
+    def updateTree(self,v,tl,tr,index,val):
+        if(tl==tr):
+            temp[v]=val
+        else:
+            tm=(tl+tr)//2
+            if(index<=tm):
+                self.updateTree(v*2,tl,tm,index,val)
+            else:
+                self.updateTree(v*2+1,tm+1,tr,index,val)
+            
+            temp[v]=temp[2*v]+temp[2*v+1]
+        
+    
+    def sumTree(self,v,tl,tr,l,r):
+        if(l>r):
+            return 0
+        
+        if(tl==l and tr==r):
+            return temp[v]
+        
+        tm=(tl+tr)//2
+        return self.sumTree(v*2,tl,tm,l,min(tm,r))+self.sumTree(v*2+1,tm+1,tr,max(l,tm+1),r)
+    
+    def __init__(self, nums: List[int]):
+        
+        self.size=len(nums)
+        for i in range(4*self.size):
+            temp.append(-1)
+            
+        # print(self.size)
+        # print(temp)
+        
+        self.buildTree(nums,temp,1,0,len(nums)-1)
+        
+
+    def update(self, index: int, val: int) -> None:
+        
+        self.updateTree(1,0,self.size-1,index,val)
+        
+
+    def sumRange(self, left: int, right: int) -> int:
+        # print(temp)
+        return self.sumTree(1,0,self.size-1,left,right)
+        
+
+
+# Your NumArray object will be instantiated and called as such:
+# obj = NumArray(nums)
+# obj.update(index,val)
+# param_2 = obj.sumRange(left,right)
