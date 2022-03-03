@@ -52,4 +52,34 @@ if g.Cyclic():
 else:
     print("Graph does not contain cycle")
 
+    
+    
+#union and find using rank
+class UnionFind:
+    def __init__(self):
+        self.parents = collections.defaultdict(lambda: -1)
+        self.ranks = collections.defaultdict(lambda: 1)
 
+    def join(self, pa, pb):
+        if self.ranks[pa] >= self.ranks[pb]:
+            self.parents[pb] = pa
+            if self.ranks[pa] == self.ranks[pb]:
+                self.ranks[pa] += 1
+        else:
+            self.parents[pa] = pb
+
+    def find(self, a):
+        if self.parents[a] == -1:
+            return a
+        return self.find(self.parents[a])
+
+
+class Solution:
+    def solve(self, edges):
+        res = UnionFind()
+        for edge in edges:
+            ra, rb = res.find(edge[0]), res.find(edge[1])
+            if ra == rb:
+                return False
+            res.join(ra, rb)
+        return True
